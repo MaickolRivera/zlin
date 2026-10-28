@@ -8,7 +8,7 @@ export function AuthButtons() {
   if (user) {
     return (
       <div className="flex items-center gap-3">
-        <span className="font-pixel text-xs text-muted-foreground">@{user.username}</span>
+        <span className="font-pixel text-xl text-muted-foreground">@{user.username}</span>
         <Button variant="outline" onClick={logout}>
           Salir
         </Button>

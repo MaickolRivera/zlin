@@ -12,7 +12,7 @@ export default function App() {
       <main className="mx-auto max-w-5xl px-4 py-12">
         {/* La home no lleva nav; el resto de páginas solo muestra el logo para volver. */}
         {pathname !== '/' && (
-          <Link to="/" className="mb-10 block text-center font-pixel text-2xl tracking-wider">
+          <Link to="/" className="mb-10 block text-center font-pixel text-5xl leading-none">
             ZLIN
           </Link>
         )}

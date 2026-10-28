@@ -46,8 +46,8 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center gap-10">
       <section className="flex flex-col items-center gap-6 text-center">
-        <h1 className="font-pixel text-6xl tracking-wider sm:text-8xl">ZLIN</h1>
-        <p className="font-pixel text-xs leading-relaxed text-muted-foreground sm:text-sm">
+        <h1 className="font-pixel text-8xl leading-none sm:text-9xl">ZLIN</h1>
+        <p className="font-pixel text-2xl text-muted-foreground sm:text-3xl">
           zip(Acortador de links con QR)
         </p>
         <AuthButtons />
