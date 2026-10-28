@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRight, Check, Copy } from 'lucide-react'
+import { AuthButtons } from '@/components/AuthButtons'
 import { QrPanel } from '@/components/QrPanel'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -44,11 +45,12 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col items-center gap-10">
-      <section className="max-w-2xl text-center">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Acorta, comparte, escanea.</h1>
-        <p className="mt-4 text-lg text-muted-foreground">
-          Convierte enlaces largos en links cortos y obtén al instante un código QR listo para compartir.
+      <section className="flex flex-col items-center gap-6 text-center">
+        <h1 className="font-pixel text-6xl tracking-wider sm:text-8xl">ZLIN</h1>
+        <p className="font-pixel text-xs leading-relaxed text-muted-foreground sm:text-sm">
+          zip(Acortador de links con QR)
         </p>
+        <AuthButtons />
       </section>
 
       <section className="grid w-full overflow-hidden rounded-2xl border bg-card shadow-sm md:grid-cols-2">
