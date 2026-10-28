@@ -1,0 +1,18 @@
+name: Keep API alive
+
+# Render (plan gratis) duerme el servicio tras ~15 min sin tráfico.
+# Este ping a /health lo mantiene despierto. Requiere el repo público y la variable API_URL
+# (Settings > Secrets and variables > Actions > Variables), ej: https://zlin-api.onrender.com
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    if: vars.API_URL != ''
+    steps:
+      - name: Ping /health
+        run: curl -fsS --max-time 90 --retry 3 --retry-delay 15 "${{ vars.API_URL }}/health"
