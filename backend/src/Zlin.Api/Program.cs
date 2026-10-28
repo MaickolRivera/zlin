@@ -30,8 +30,14 @@ builder.Services
     });
 builder.Services.AddAuthorization();
 
+builder.Services.Configure<AppOptions>(builder.Configuration.GetSection(AppOptions.Section));
+var appOptions = builder.Configuration.GetSection(AppOptions.Section).Get<AppOptions>() ?? new AppOptions();
+builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
+    p.WithOrigins(appOptions.CorsOrigins).AllowAnyHeader().AllowAnyMethod()));
+
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<LinkService>();
 
 var app = builder.Build();
 
@@ -43,10 +49,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapAuthEndpoints();
+app.MapLinkEndpoints();
 
 app.Run();
 

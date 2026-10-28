@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Zlin.Api.Data;
@@ -31,9 +30,7 @@ public static class AuthEndpoints
 
         app.MapGet("/api/users/me", async (ClaimsPrincipal principal, AppDbContext db) =>
         {
-            var sub = principal.FindFirstValue(JwtRegisteredClaimNames.Sub)
-                      ?? principal.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!Guid.TryParse(sub, out var id)) return Results.Unauthorized();
+            if (principal.GetUserId() is not { } id) return Results.Unauthorized();
 
             var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
             return user is null ? Results.NotFound() : Results.Ok(AuthService.ToResponse(user));
