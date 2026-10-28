@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: zlin-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      # Cadena de conexión de Neon (postgres://...). Se pega en el panel de Render.
+      - key: ConnectionStrings__Default
+        sync: false
+      - key: Jwt__Key
+        generateValue: true
+      - key: App__PublicUrl
+        value: https://zlin.vercel.app
+      - key: App__CorsOrigins__0
+        value: https://zlin.vercel.app
