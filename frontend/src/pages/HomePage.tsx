@@ -4,6 +4,7 @@ import { QrPanel } from '@/components/QrPanel'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAuth } from '@/lib/auth'
 import { BASE_HOST } from '@/lib/config'
 import { isValidUrl, shorten, type ShortLink } from '@/lib/shorten'
 
@@ -12,6 +13,8 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
   const [link, setLink] = useState<ShortLink | null>(null)
   const [copied, setCopied] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { token } = useAuth()
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -22,7 +25,14 @@ export default function HomePage() {
     }
     setError(null)
     setCopied(false)
-    setLink(await shorten(value))
+    setLoading(true)
+    try {
+      setLink(await shorten(value, token))
+    } catch (err) {
+      setError((err as Error).message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function copy() {
@@ -72,8 +82,8 @@ export default function HomePage() {
             )}
           </div>
 
-          <Button type="submit" size="lg" className="w-fit">
-            Acortar enlace <ArrowRight />
+          <Button type="submit" size="lg" className="w-fit" disabled={loading}>
+            {loading ? 'Acortando…' : 'Acortar enlace'} <ArrowRight />
           </Button>
         </form>
 
