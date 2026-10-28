@@ -17,13 +17,13 @@ export function AuthButtons() {
   }
 
   return (
-    <div className="flex items-center gap-3">
-      <Button variant="outline" asChild>
+    <div className="flex items-center gap-4 rounded-full border-2 border-border text-xs overflow-hidden">
+      <button className='py-1.5 pl-4'>
         <Link to="/login">Ingresar</Link>
-      </Button>
-      <Button asChild>
+      </button>
+      <button className='py-1.5 px-3 bg-border'>
         <Link to="/register">Crear cuenta</Link>
-      </Button>
+      </button>
     </div>
   )
 }

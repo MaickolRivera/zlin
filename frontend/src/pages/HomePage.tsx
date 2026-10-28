@@ -44,18 +44,17 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-10">
-      <section className="flex flex-col items-center gap-6 text-center">
-        <h1 className="font-pixel text-8xl leading-none sm:text-9xl">ZLIN</h1>
-        <p className="font-pixel text-2xl text-muted-foreground sm:text-3xl">
-          zip(Acortador de links con QR)
+    <div className="flex w-full max-w-5xl flex-col items-center gap-8">
+      <section className="flex flex-col items-center gap-4 text-center">
+        <h1 className="font-pixel text-6xl leading-18 sm:text-8xl ">zlin</h1>
+        <p className="text-sm text-muted-foreground sm:text-md">
+          [Acortador de links con QR].zip
         </p>
         <AuthButtons />
       </section>
 
       <section className="grid w-full overflow-hidden rounded-2xl border bg-card shadow-sm md:grid-cols-2">
         <form onSubmit={onSubmit} noValidate className="flex flex-col justify-center gap-6 p-8 sm:p-10">
-          <h2 className="text-2xl font-bold tracking-tight">Crea tu primer enlace</h2>
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="url">
@@ -69,10 +68,11 @@ export default function HomePage() {
               onChange={(e) => setUrl(e.target.value)}
               aria-invalid={!!error}
             />
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            {/* Alto reservado para que el mensaje de error no mueva el resto del layout. */}
+            <p className="min-h-5 text-sm text-destructive">{error}</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex flex-col items-start flex-wrap gap-2 text-sm text-muted-foreground">
             {link ? 'Tu enlace corto' : 'Vista previa'}
             <code className="rounded-full border bg-muted px-3 py-1 font-mono text-xs text-foreground">
               {link ? link.shortUrl.replace(/^https?:\/\//, '') : `${BASE_HOST}/abc123`}
@@ -84,12 +84,12 @@ export default function HomePage() {
             )}
           </div>
 
-          <Button type="submit" size="lg" className="w-fit" disabled={loading}>
+          <Button type="submit" size="sm" className="w-fit rounded-full px-7 py-1.5" disabled={loading}>
             {loading ? 'Acortando…' : 'Acortar enlace'} <ArrowRight />
           </Button>
         </form>
 
-        <div className="flex min-h-72 items-center justify-center bg-gradient-to-br from-muted via-background to-muted p-8">
+        <div className="flex min-h-72 items-center justify-center bg-linear-to-br from-muted via-background to-muted p-8">
           <QrPanel value={link?.shortUrl} />
         </div>
       </section>

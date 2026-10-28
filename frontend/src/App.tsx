@@ -9,11 +9,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <main className="mx-auto max-w-5xl px-4 py-12">
+      <main className="flex min-h-screen w-full flex-col items-center justify-center px-4 py-10">
         {/* La home no lleva nav; el resto de páginas solo muestra el logo para volver. */}
         {pathname !== '/' && (
           <Link to="/" className="mb-10 block text-center font-pixel text-5xl leading-none">
-            ZLIN
+            zlin
           </Link>
         )}
         <Routes>
