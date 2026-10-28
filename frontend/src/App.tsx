@@ -1,4 +1,5 @@
 ﻿import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { Footer } from '@/components/Footer'
 import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
 import RedirectPage from '@/pages/RedirectPage'
@@ -8,8 +9,8 @@ export default function App() {
   const { pathname } = useLocation()
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="flex min-h-screen w-full flex-col items-center justify-center px-4 py-10">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <main className="flex w-full flex-1 flex-col items-center justify-center px-4 py-10">
         {/* La home no lleva nav; el resto de páginas solo muestra el logo para volver. */}
         {pathname !== '/' && (
           <Link to="/" className="mb-10 block text-center font-pixel text-5xl leading-none">
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/:code" element={<RedirectPage />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   )
 }

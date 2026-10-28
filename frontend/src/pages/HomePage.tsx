@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRight, Check, Copy } from 'lucide-react'
 import { AuthButtons } from '@/components/AuthButtons'
+import { ExternalLink } from '@/components/ExternalLink'
 import { QrPanel } from '@/components/QrPanel'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -48,7 +49,8 @@ export default function HomePage() {
       <section className="flex flex-col items-center gap-4 text-center">
         <h1 className="font-pixel text-6xl leading-18 sm:text-8xl ">zlin</h1>
         <p className="text-sm text-muted-foreground sm:text-md">
-          [Acortador de links con QR].zip
+          [Acortador de links con QR]
+          <ExternalLink href="https://github.com/MaickolRivera/zlin">.zip</ExternalLink>
         </p>
         <AuthButtons />
       </section>
