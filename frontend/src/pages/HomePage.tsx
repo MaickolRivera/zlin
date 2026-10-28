@@ -44,7 +44,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex w-full max-w-5xl flex-col items-center gap-8">
+    <div className="flex w-full max-w-4xl flex-col items-center gap-8">
       <section className="flex flex-col items-center gap-4 text-center">
         <h1 className="font-pixel text-6xl leading-18 sm:text-8xl ">zlin</h1>
         <p className="text-sm text-muted-foreground sm:text-md">
