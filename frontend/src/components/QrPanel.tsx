@@ -3,7 +3,7 @@ import { BASE_URL } from '@/lib/config'
 
 type Props = { value?: string }
 
-// Sin `value` muestra un QR gris que apunta a Tink; con `value` muestra el QR del enlace del usuario.
+// Sin `value` muestra un QR gris que apunta a Zlin; con `value` muestra el QR del enlace del usuario.
 export function QrPanel({ value }: Props) {
   const active = !!value
 

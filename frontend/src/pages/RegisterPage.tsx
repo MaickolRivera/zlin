@@ -37,7 +37,7 @@ export default function RegisterPage() {
       <form onSubmit={onSubmit} noValidate>
         <CardHeader>
           <CardTitle>Crear cuenta</CardTitle>
-          <CardDescription>Empieza a acortar tus enlaces con Tink.</CardDescription>
+          <CardDescription>Empieza a acortar tus enlaces con Zlin.</CardDescription>
         </CardHeader>
         <CardContent className="mt-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">

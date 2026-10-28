@@ -3,9 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Tink.Api.Domain;
+using Zlin.Api.Domain;
 
-namespace Tink.Api.Services;
+namespace Zlin.Api.Services;
 
 public class TokenService(IOptions<JwtOptions> options)
 {

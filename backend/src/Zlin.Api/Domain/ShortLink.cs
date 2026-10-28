@@ -1,4 +1,4 @@
-namespace Tink.Api.Domain;
+namespace Zlin.Api.Domain;
 
 public class ShortLink
 {

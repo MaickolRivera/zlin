@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Tink.Api.Data;
-using Tink.Api.Domain;
-using Tink.Api.Dtos;
+using Zlin.Api.Data;
+using Zlin.Api.Domain;
+using Zlin.Api.Dtos;
 
-namespace Tink.Api.Services;
+namespace Zlin.Api.Services;
 
 public class AuthService(AppDbContext db, TokenService tokens)
 {

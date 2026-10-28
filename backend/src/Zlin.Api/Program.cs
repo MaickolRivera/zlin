@@ -1,10 +1,10 @@
-﻿using System.Text;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Tink.Api.Data;
-using Tink.Api.Endpoints;
-using Tink.Api.Services;
+using Zlin.Api.Data;
+using Zlin.Api.Endpoints;
+using Zlin.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

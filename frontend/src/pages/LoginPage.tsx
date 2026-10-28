@@ -25,7 +25,7 @@ export default function LoginPage() {
       <form onSubmit={onSubmit} noValidate>
         <CardHeader>
           <CardTitle>Ingresar</CardTitle>
-          <CardDescription>Accede a tu cuenta de Tink.</CardDescription>
+          <CardDescription>Accede a tu cuenta de Zlin.</CardDescription>
         </CardHeader>
         <CardContent className="mt-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">

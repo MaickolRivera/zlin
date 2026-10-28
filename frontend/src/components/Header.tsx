@@ -8,7 +8,7 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2 text-lg font-semibold tracking-tight">
           <LinkIcon className="size-5" />
-          Tink
+          Zlin
         </Link>
         <nav className="flex items-center gap-2">
           <Button variant="ghost" asChild>

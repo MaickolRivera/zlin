@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Tink.Api.Dtos;
+namespace Zlin.Api.Dtos;
 
 public record RegisterRequest(
     [Required, EmailAddress, MaxLength(256)] string Email,

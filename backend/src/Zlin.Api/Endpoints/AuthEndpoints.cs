@@ -1,11 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using Tink.Api.Data;
-using Tink.Api.Dtos;
-using Tink.Api.Services;
+using Zlin.Api.Data;
+using Zlin.Api.Dtos;
+using Zlin.Api.Services;
 
-namespace Tink.Api.Endpoints;
+namespace Zlin.Api.Endpoints;
 
 public static class AuthEndpoints
 {

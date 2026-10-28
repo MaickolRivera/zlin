@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Tink.Api.Domain;
+using Zlin.Api.Domain;
 
-namespace Tink.Api.Data;
+namespace Zlin.Api.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
