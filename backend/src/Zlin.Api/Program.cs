@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Zlin.Api.Data;
@@ -43,6 +44,16 @@ var appOptions = builder.Configuration.GetSection(AppOptions.Section).Get<AppOpt
 builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
     p.WithOrigins(appOptions.CorsOrigins).AllowAnyHeader().AllowAnyMethod()));
 
+builder.Services.AddZlinRateLimiting(builder.Configuration);
+
+// Render pone un proxy delante: sin esto, todas las peticiones parecen venir de la misma IP.
+builder.Services.Configure<ForwardedHeadersOptions>(o =>
+{
+    o.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    o.KnownIPNetworks.Clear();
+    o.KnownProxies.Clear();
+});
+
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<LinkService>();
@@ -59,9 +70,11 @@ if (app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
+app.UseForwardedHeaders();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 
 // Liviano y sin base de datos: lo usa el keep-alive de GitHub Actions.
 // Acepta HEAD además de GET porque los monitores (UptimeRobot) suelen sondear con HEAD.

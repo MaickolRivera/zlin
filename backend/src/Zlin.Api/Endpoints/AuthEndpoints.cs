@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Zlin.Api.Data;
 using Zlin.Api.Dtos;
@@ -10,7 +11,7 @@ public static class AuthEndpoints
 {
     public static void MapAuthEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/auth").WithTags("Auth");
+        var group = app.MapGroup("/api/auth").WithTags("Auth").RequireRateLimiting(RateLimiting.Auth);
 
         group.MapPost("/register", async (RegisterRequest req, AuthService auth) =>
         {

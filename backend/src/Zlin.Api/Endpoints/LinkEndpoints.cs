@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.RateLimiting;
 using Zlin.Api.Dtos;
 using Zlin.Api.Services;
 
@@ -27,7 +28,8 @@ public static class LinkEndpoints
 
             var link = await links.CreateAsync(req, principal.GetUserId());
             return Results.Created($"/{link.Code}", links.ToResponse(link));
-        });
+        })
+        .RequireRateLimiting(RateLimiting.CreateLink);
 
         group.MapGet("/", async (ClaimsPrincipal principal, LinkService links) =>
         {
