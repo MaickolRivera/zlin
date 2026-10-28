@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth'
 
 export function AuthButtons() {
@@ -7,11 +6,11 @@ export function AuthButtons() {
 
   if (user) {
     return (
-      <div className="flex items-center gap-3">
-        <span className="font-pixel text-xl text-muted-foreground">@{user.username}</span>
-        <Button variant="outline" onClick={logout}>
-          Salir
-        </Button>
+      <div className="flex items-center gap-8">
+        <p className="font-pixel text-xl text-muted-foreground"><span className='text-base'>@_</span>{user.username}</p>
+        <button className="font-pixel text-base border-b border-white cursor-pointer tracking-widest" onClick={logout}>
+          SALIR
+        </button>
       </div>
     )
   }
