@@ -1,5 +1,11 @@
 import { API_URL } from '@/lib/config'
 
+// Render (plan gratis) duerme el API tras un rato sin tráfico. Se llama al abrir la app para que
+// vaya arrancando mientras la persona escribe. Respuesta opaca (no-cors): solo importa que llegue.
+export function wakeUp() {
+  fetch(`${API_URL}/health`, { mode: 'no-cors' }).catch(() => {})
+}
+
 export class ApiError extends Error {
   status: number
   fieldErrors: Record<string, string[]>

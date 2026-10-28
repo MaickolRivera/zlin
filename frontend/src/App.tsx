@@ -1,5 +1,7 @@
-﻿import { Link, Route, Routes, useLocation } from 'react-router-dom'
+﻿import { useEffect } from 'react'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { Footer } from '@/components/Footer'
+import { wakeUp } from '@/lib/api'
 import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
 import RedirectPage from '@/pages/RedirectPage'
@@ -7,6 +9,8 @@ import RegisterPage from '@/pages/RegisterPage'
 
 export default function App() {
   const { pathname } = useLocation()
+
+  useEffect(wakeUp, [])
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
