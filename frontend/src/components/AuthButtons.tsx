@@ -17,8 +17,8 @@ export function AuthButtons() {
   }
 
   return (
-    <div className="flex items-center gap-4 rounded-full border-2 border-border text-xs overflow-hidden">
-      <button className='py-1.5 pl-4'>
+    <div className="flex items-center ml-2 gap-4 rounded-full border-2 border-border text-xs overflow-hidden">
+      <button className='py-1.5 pl-6 pr-1'>
         <Link to="/login">Ingresar</Link>
       </button>
       <button className='py-1.5 px-3 bg-border'>

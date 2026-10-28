@@ -45,7 +45,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex w-full max-w-2xl flex-col items-center gap-8">
+    <div className="flex w-full max-w-xl flex-col items-center gap-8">
       <section className="flex flex-col items-center gap-4 text-center">
         <h1 className="font-pixel text-6xl leading-18 sm:text-8xl ">zlin</h1>
         <p className="text-sm text-muted-foreground sm:text-md">
@@ -58,9 +58,9 @@ export default function HomePage() {
       <section className="grid w-full overflow-hidden rounded-2xl border bg-card shadow-sm md:grid-cols-2">
         <form onSubmit={onSubmit} noValidate className="flex flex-col justify-center gap-4 p-8">
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1.5">
             <Label htmlFor="url">
-              Pega un enlace largo <span className="text-destructive">*</span>
+              Pega tu enlace <span className="text-destructive">*</span>
             </Label>
             <Input
               id="url"
@@ -71,22 +71,23 @@ export default function HomePage() {
               aria-invalid={!!error}
             />
             {/* Alto reservado para que el mensaje de error no mueva el resto del layout. */}
-            <p className="min-h-5 text-sm text-destructive">{error}</p>
+            <p className="min-h-5 text-xs text-destructive">{error}</p>
           </div>
 
           <div className="flex flex-col items-start flex-wrap gap-2 text-sm text-muted-foreground">
             {link ? 'Tu enlace corto' : 'Vista previa'}
-            <code className="rounded-full border bg-muted px-3 py-1 font-mono text-xs text-foreground">
-              {link ? link.shortUrl.replace(/^https?:\/\//, '') : `${BASE_HOST}/abc123`}
-            </code>
-            {link && (
+            <div className='flex flex-row items-center gap-2'>
+              <code className="rounded-full border bg-muted px-3 py-1 font-mono text-xs text-foreground">
+                {link ? link.shortUrl.replace(/^https?:\/\//, '') : `${BASE_HOST}/abc123`}
+              </code>
               <Button type="button" variant="ghost" size="icon-sm" onClick={copy} aria-label="Copiar enlace">
                 {copied ? <Check /> : <Copy />}
               </Button>
-            )}
+            </div>
+            
           </div>
 
-          <Button type="submit" size="sm" className="w-fit rounded-full px-7 py-1.5" disabled={loading}>
+          <Button type="submit" size="sm" className="w-fit rounded-full px-6 py-2" disabled={loading}>
             {loading ? 'Acortando…' : 'Acortar enlace'} <ArrowRight />
           </Button>
         </form>

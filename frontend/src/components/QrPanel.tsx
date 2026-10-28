@@ -12,7 +12,7 @@ export function QrPanel({ value }: Props) {
       <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-border">
         <QRCodeSVG
           value={value ?? BASE_URL}
-          size={192}
+          size={160}
           level="M"
           fgColor={active ? '#0a0a0a' : '#d4d4d4'}
           bgColor="#ffffff"
