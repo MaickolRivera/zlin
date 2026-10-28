@@ -64,7 +64,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Liviano y sin base de datos: lo usa el keep-alive de GitHub Actions.
-app.MapGet("/health", () => Results.Ok(new { status = "ok" })).ExcludeFromDescription();
+// Acepta HEAD además de GET porque los monitores (UptimeRobot) suelen sondear con HEAD.
+app.MapMethods("/health", ["GET", "HEAD"], () => Results.Ok(new { status = "ok" })).ExcludeFromDescription();
 
 app.MapAuthEndpoints();
 app.MapLinkEndpoints();
