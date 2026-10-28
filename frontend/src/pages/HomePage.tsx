@@ -44,7 +44,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex w-full max-w-4xl flex-col items-center gap-8">
+    <div className="flex w-full max-w-2xl flex-col items-center gap-8">
       <section className="flex flex-col items-center gap-4 text-center">
         <h1 className="font-pixel text-6xl leading-18 sm:text-8xl ">zlin</h1>
         <p className="text-sm text-muted-foreground sm:text-md">
@@ -54,7 +54,7 @@ export default function HomePage() {
       </section>
 
       <section className="grid w-full overflow-hidden rounded-2xl border bg-card shadow-sm md:grid-cols-2">
-        <form onSubmit={onSubmit} noValidate className="flex flex-col justify-center gap-6 p-8 sm:p-10">
+        <form onSubmit={onSubmit} noValidate className="flex flex-col justify-center gap-4 p-8">
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="url">
