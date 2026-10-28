@@ -11,8 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddValidation();
 
+// Render asigna el puerto por la variable PORT.
+if (Environment.GetEnvironmentVariable("PORT") is { Length: > 0 } port)
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
+var connectionString = builder.Configuration.GetConnectionString("Default");
+if (string.IsNullOrWhiteSpace(connectionString))
+    throw new InvalidOperationException("Falta ConnectionStrings:Default (usa user-secrets o la variable ConnectionStrings__Default).");
+
 builder.Services.AddDbContext<AppDbContext>(o =>
-    o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+    o.UseNpgsql(ConnectionStrings.ToNpgsql(connectionString), npgsql => npgsql.EnableRetryOnFailure()));
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.Section));
 var jwt = builder.Configuration.GetSection(JwtOptions.Section).Get<JwtOptions>() ?? new JwtOptions();
@@ -41,17 +49,22 @@ builder.Services.AddScoped<LinkService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    using var scope = app.Services.CreateScope();
-    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
+    // En producción TLS termina en el proxy de Render.
+    app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Liviano y sin base de datos: lo usa el keep-alive de GitHub Actions.
+app.MapGet("/health", () => Results.Ok(new { status = "ok" })).ExcludeFromDescription();
 
 app.MapAuthEndpoints();
 app.MapLinkEndpoints();
