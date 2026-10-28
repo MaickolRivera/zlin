@@ -3,7 +3,6 @@ import { ArrowRight, Check, Copy } from 'lucide-react'
 import { AuthButtons } from '@/components/AuthButtons'
 import { ExternalLink } from '@/components/ExternalLink'
 import { QrPanel } from '@/components/QrPanel'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/lib/auth'
@@ -80,16 +79,25 @@ export default function HomePage() {
               <code className="rounded-full border bg-muted px-3 py-1 font-mono text-xs text-foreground">
                 {link ? link.shortUrl.replace(/^https?:\/\//, '') : `${BASE_HOST}/abc123`}
               </code>
-              <Button type="button" variant="ghost" size="icon-sm" onClick={copy} aria-label="Copiar enlace">
+              <button
+                type="button"
+                onClick={copy}
+                aria-label="Copiar enlace"
+                className="inline-flex size-8 items-center justify-center rounded-[10px] transition-all outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+              >
                 {copied ? <Check /> : <Copy />}
-              </Button>
+              </button>
             </div>
             
           </div>
 
-          <Button type="submit" size="sm" className="w-fit rounded-full px-6 py-2" disabled={loading}>
+          <button
+            type="submit"
+            disabled={loading}
+            className="inline-flex h-8 w-fit items-center justify-center gap-1 rounded-full bg-primary px-6 py-2 text-sm font-medium whitespace-nowrap text-primary-foreground transition-all outline-none hover:bg-primary/80 focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+          >
             {loading ? 'Acortando…' : 'Acortar enlace'} <ArrowRight />
-          </Button>
+          </button>
         </form>
 
         <div className="flex min-h-72 items-center justify-center bg-linear-to-br from-muted via-background to-muted p-8">

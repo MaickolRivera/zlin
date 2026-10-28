@@ -2,7 +2,6 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ApiError } from '@/lib/api'
 import { useAuth } from '@/lib/auth'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -54,9 +53,9 @@ export default function LoginPage() {
           {error && <p className="text-sm text-destructive">{error}</p>}
         </CardContent>
         <CardFooter className="mt-6 flex flex-col gap-3">
-          <Button type="submit" className="w-full" disabled={loading}>
+          <button type="submit" className="inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-md bg-primary px-2.5 text-sm font-medium text-primary-foreground transition-all outline-none hover:bg-primary/80 focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px disabled:pointer-events-none disabled:opacity-50" disabled={loading}>
             {loading ? 'Ingresando…' : 'Ingresar'}
-          </Button>
+          </button>
           <p className="text-sm text-muted-foreground">
             ¿No tienes cuenta?{' '}
             <Link to="/register" className="font-medium text-foreground underline underline-offset-4">
