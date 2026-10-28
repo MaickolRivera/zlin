@@ -1,5 +1,6 @@
 ﻿import { Route, Routes } from 'react-router-dom'
 import { Header } from '@/components/Header'
+import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 
@@ -9,7 +10,7 @@ export default function App() {
       <Header />
       <main className="mx-auto max-w-5xl px-4 py-12">
         <Routes>
-          <Route path="/" element={<p>Inicio</p>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
