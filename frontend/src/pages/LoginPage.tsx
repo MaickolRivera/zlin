@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { ApiError } from '@/lib/api'
+import { useAuth } from '@/lib/auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,15 +11,26 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!email.trim() || !password) {
       setError('Completa tu email y contraseña.')
       return
     }
     setError(null)
-    // TODO: conectar con POST /api/auth/login
+    setLoading(true)
+    try {
+      await login(email, password)
+      navigate('/')
+    } catch (err) {
+      setError(err instanceof ApiError && err.status === 401 ? 'Email o contraseña incorrectos.' : (err as Error).message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -41,7 +54,9 @@ export default function LoginPage() {
           {error && <p className="text-sm text-destructive">{error}</p>}
         </CardContent>
         <CardFooter className="mt-6 flex flex-col gap-3">
-          <Button type="submit" className="w-full">Ingresar</Button>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? 'Ingresando…' : 'Ingresar'}
+          </Button>
           <p className="text-sm text-muted-foreground">
             ¿No tienes cuenta?{' '}
             <Link to="/register" className="font-medium text-foreground underline underline-offset-4">

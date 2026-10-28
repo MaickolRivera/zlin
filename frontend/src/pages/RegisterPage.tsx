@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/lib/auth'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -20,16 +21,30 @@ function validate({ email, username, password }: Fields) {
 export default function RegisterPage() {
   const [values, setValues] = useState<Fields>({ email: '', username: '', password: '' })
   const [errors, setErrors] = useState<Partial<Fields>>({})
+  const [formError, setFormError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const { register } = useAuth()
+  const navigate = useNavigate()
 
   const set = (key: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setValues((v) => ({ ...v, [key]: e.target.value }))
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault()
     const found = validate(values)
     setErrors(found)
+    setFormError(null)
     if (Object.keys(found).length > 0) return
-    // TODO: conectar con POST /api/auth/register
+
+    setLoading(true)
+    try {
+      await register(values.email, values.username, values.password)
+      navigate('/')
+    } catch (err) {
+      setFormError((err as Error).message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -58,9 +73,12 @@ export default function RegisterPage() {
               value={values.password} onChange={set('password')} aria-invalid={!!errors.password} />
             {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
           </div>
+          {formError && <p className="text-sm text-destructive">{formError}</p>}
         </CardContent>
         <CardFooter className="mt-6 flex flex-col gap-3">
-          <Button type="submit" className="w-full">Crear cuenta</Button>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? 'Creando cuenta…' : 'Crear cuenta'}
+          </Button>
           <p className="text-sm text-muted-foreground">
             ¿Ya tienes cuenta?{' '}
             <Link to="/login" className="font-medium text-foreground underline underline-offset-4">
