@@ -2,20 +2,23 @@ import { useState, type FormEvent } from 'react'
 import { ArrowRight, Check, Copy } from 'lucide-react'
 import { AuthButtons } from '@/components/AuthButtons'
 import { ExternalLink } from '@/components/ExternalLink'
+import { MyLinks } from '@/components/MyLinks'
 import { QrPanel } from '@/components/QrPanel'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select } from '@/components/ui/select'
 import { useAuth } from '@/lib/auth'
 import { BASE_HOST } from '@/lib/config'
-import { isValidUrl, shorten, type ShortLink } from '@/lib/shorten'
+import { EXPIRATIONS, isValidUrl, shorten, type ShortLink } from '@/lib/shorten'
 
 export default function HomePage() {
   const [url, setUrl] = useState('')
+  const [expiresInMs, setExpiresInMs] = useState(0)
   const [error, setError] = useState<string | null>(null)
   const [link, setLink] = useState<ShortLink | null>(null)
   const [copied, setCopied] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { token } = useAuth()
+  const { token, user } = useAuth()
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -28,7 +31,7 @@ export default function HomePage() {
     setCopied(false)
     setLoading(true)
     try {
-      setLink(await shorten(value, token))
+      setLink(await shorten(value, expiresInMs, token))
     } catch (err) {
       setError((err as Error).message)
     } finally {
@@ -44,7 +47,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex w-full max-w-xl flex-col items-center gap-8">
+    <div className="flex w-full max-w-2xl flex-col items-center gap-8">
       <section className="flex flex-col items-center gap-4 text-center">
         <h1 className="font-pixel text-6xl leading-18 sm:text-8xl ">zlin</h1>
         <p className="text-sm text-muted-foreground sm:text-md">
@@ -58,7 +61,7 @@ export default function HomePage() {
         <form onSubmit={onSubmit} noValidate className="flex flex-col justify-center gap-4 p-8">
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="url">
+            <Label htmlFor="url"> 
               Pega tu enlace <span className="text-destructive">*</span>
             </Label>
             <Input
@@ -69,6 +72,14 @@ export default function HomePage() {
               onChange={(e) => setUrl(e.target.value)}
               aria-invalid={!!error}
             />
+
+            <Select id="expiration" value={expiresInMs} onChange={(e) => setExpiresInMs(Number(e.target.value))}>
+              {EXPIRATIONS.map(({ label, ms }) => (
+                <option key={ms} value={ms}>
+                  {label}
+                </option>
+              ))}
+            </Select>
             {/* Alto reservado para que el mensaje de error no mueva el resto del layout. */}
             <p className="min-h-5 text-xs text-destructive">{error}</p>
           </div>
@@ -104,6 +115,9 @@ export default function HomePage() {
           <QrPanel value={link?.shortUrl} />
         </div>
       </section>
+
+      {!user && <p className='text-sm text-muted-foreground sm:text-md'>Inicia sesión para guardar tus enlaces</p>}
+      {token && <MyLinks token={token} refreshKey={link?.code} />}
     </div>
   )
 }
