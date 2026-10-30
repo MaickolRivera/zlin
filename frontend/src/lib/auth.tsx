@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
-import { api } from '@/lib/api'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { api, setUnauthorizedHandler } from '@/lib/api'
 
 export type User = { id: string; email: string; username: string; createdAt: string }
 type Session = { token: string; expiresAt: string; user: User }
@@ -38,6 +38,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Sin almacenamiento disponible: la sesión dura lo que dure la pestaña.
     }
   }, [])
+
+  useEffect(()=>{
+    setUnauthorizedHandler(()=> save(null))
+    return () => setUnauthorizedHandler(null)
+  }, [save])
 
   const value = useMemo<AuthContextValue>(
     () => ({

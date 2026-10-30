@@ -1,5 +1,10 @@
 import { API_URL } from '@/lib/config'
 
+let onUnauthorized: (() => void) | null
+export function setUnauthorizedHandler(fn: (() => void) | null){
+  onUnauthorized = fn;
+}
+
 // Render (plan gratis) duerme el API tras un rato sin tráfico. Se llama al abrir la app para que
 // vaya arrancando mientras la persona escribe. Respuesta opaca (no-cors): solo importa que llegue.
 export function wakeUp() {
@@ -34,7 +39,9 @@ export async function api<T>(path: string, { method = 'GET', body, token }: Opti
     throw new ApiError(0, 'No se pudo conectar con el servidor.')
   }
 
+  if (res.status === 401 && token) onUnauthorized?.()
   if (res.status === 204) return undefined as T
+
 
   const data = await res.json().catch(() => null)
   if (res.ok) return data as T
@@ -44,3 +51,4 @@ export async function api<T>(path: string, { method = 'GET', body, token }: Opti
   const first = Object.values(fieldErrors)[0]?.[0]
   throw new ApiError(res.status, data?.error ?? first ?? 'Ocurrió un error inesperado.', fieldErrors)
 }
+
